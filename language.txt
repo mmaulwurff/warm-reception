@@ -1,0 +1,7 @@
+[enu default]
+
+WR_MODE       = "Warm Reception Mode";
+
+WR_ALL_AWAKE  = "Wake everybody";
+WR_VANILLA    = "Original behavior";
+WR_ALL_ASLEEP = "Disable hot starts";

@@ -1,0 +1,4 @@
+gameinfo
+{
+  AddEventHandlers = "wr_EventHandler"
+}
