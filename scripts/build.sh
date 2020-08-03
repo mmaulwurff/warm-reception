@@ -2,8 +2,7 @@
 
 set -e
 
-filename=warm-reception.pk3
-#filename=warm-reception-$(git describe --abbrev=0 --tags).pk3
+filename=warm-reception-$(git describe --abbrev=0 --tags).pk3
 
 rm  -f $filename
 zip -R $filename "*.md" "*.txt" "*.zs"
