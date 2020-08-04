@@ -19,6 +19,8 @@
 class wr_EventHandler : EventHandler
 {
 
+// public: /////////////////////////////////////////////////////////////////////////////////////////
+
   override
   void WorldThingSpawned(WorldEvent event)
   {
@@ -32,6 +34,7 @@ class wr_EventHandler : EventHandler
     case AllAsleep: turnAwayWhoLooksAtPlayer(monster, player); return;
     case AllAwakeEvenAmbush: alertAmbush(monster, player); return;
     case HotStart:  turnToLookAtPlayer(monster, player); return;
+    case NoStartEnemies: removeStartEnemies(monster, player); return;
     }
   }
 
@@ -44,38 +47,55 @@ class wr_EventHandler : EventHandler
     AllAsleep,
     AllAwakeEvenAmbush,
     HotStart,
+    NoStartEnemies,
   }
 
-  private
+  private static
   void alert(Actor monster, Actor player)
   {
     monster.SoundAlert(player);
   }
 
-  private
+  private static
   void alertAmbush(Actor monster, Actor player)
   {
     monster.bAmbush = false;
     monster.SoundAlert(player);
   }
 
-  private
+  private static
   void turnAwayWhoLooksAtPlayer(Actor monster, Actor player)
   {
-    if (monster.CheckSight(player))
+    if (isAtStart(monster, player))
     {
       double awayAngle = monster.AngleTo(player) + 180.0;
       monster.A_SetAngle(awayAngle);
     }
   }
 
-  private
+  private static
   void turnToLookAtPlayer(Actor monster, Actor player)
   {
-    if (monster.CheckSight(player))
+    if (isAtStart(monster, player))
     {
       monster.A_SetAngle(monster.AngleTo(player));
     }
+  }
+
+  private static
+  void removeStartEnemies(Actor monster, Actor player)
+  {
+    if (isAtStart(monster, player))
+    {
+      level.total_monsters -= monster.bCountKill;
+      monster.Destroy();
+    }
+  }
+
+  private static
+  bool isAtStart(Actor monster, Actor player)
+  {
+    return monster.CheckSight(player);
   }
 
 } // class wr_EventHandler
