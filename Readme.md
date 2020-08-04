@@ -19,3 +19,9 @@ Author: m8f
 License: GPLv3 (see copying.txt)
 
 This mod is a part of [m8f's toolbox](https://mmaulwurff.github.io/pages/toolbox).
+
+## Acknowledgments
+
+Thanks to:
+- Rowsol for feature suggestions;
+- stainedofmind for bug reports.
