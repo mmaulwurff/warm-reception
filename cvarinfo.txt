@@ -1,4 +1,2 @@
-// 0 - wake all enemies,
-// 1 - vanilla,
-// 2 - all enemies asleep.
+// See wr_EventHandler.Mode enum for values.
 server int wr_mode = 0;

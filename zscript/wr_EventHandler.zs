@@ -25,41 +25,59 @@ class wr_EventHandler : EventHandler
   private
   void setMode(Actor player)
   {
+    String actionClass;
     switch (wr_mode)
     {
-    case AllAwake:  wakeAll(player);
-    case AllAsleep: turnAwayWhoLooksAtPlayer(player);
+    case AllAwake:  actionClass = "wr_Alert"; break;
+    case AllAsleep: actionClass = "wr_TurnAwayWhoLooksAtPlayer"; break;
+    case Vanilla:   return;
     }
+
+    forEachMonsterDo(wr_Action(new(actionClass)).init(player));
   }
 
-  private
-  void wakeAll(Actor player)
+  private static
+  void forEachMonsterDo(wr_Action a)
   {
     let i = ThinkerIterator.Create();
     Actor monster;
     while (monster = Actor(i.Next()))
     {
-      if (!monster.bIsMonster) continue;
-
-      monster.SoundAlert(player);
-    }
-  }
-
-  private
-  void turnAwayWhoLooksAtPlayer(Actor player)
-  {
-    let i = ThinkerIterator.Create();
-    Actor monster;
-    while (monster = Actor(i.Next()))
-    {
-      if (!monster.bIsMonster) continue;
-
-      if (monster.CheckSight(player))
-      {
-        double awayAngle = -monster.AngleTo(player);
-        monster.A_SetAngle(awayAngle);
-      }
+      if (monster.bIsMonster) a.act(monster);
     }
   }
 
 } // class wr_EventHandler
+
+class wr_Action play
+{
+  wr_Action init(Actor player)
+  {
+    _player = player;
+    return self;
+  }
+
+  virtual void act(Actor monster) {}
+
+  protected Actor _player;
+}
+
+class wr_Alert : wr_Action
+{
+  override void act(Actor monster)
+  {
+    monster.SoundAlert(_player);
+  }
+}
+
+class wr_TurnAwayWhoLooksAtPlayer : wr_Action
+{
+  override void act(Actor monster)
+  {
+    if (monster.CheckSight(_player))
+    {
+      double awayAngle = monster.AngleTo(_player) + 180.0;
+      monster.A_SetAngle(awayAngle);
+    }
+  }
+}
