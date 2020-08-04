@@ -5,4 +5,5 @@ WR_MODE       = "Warm Reception Mode";
 WR_ALL_AWAKE  = "Wake everybody";
 WR_VANILLA    = "Original behavior";
 WR_ALL_ASLEEP = "Disable hot starts";
-WR_ALL_AWAKE_AMBUSH = "Wake everybody, no ambush";
+WR_ALL_AWAKE_AMBUSH = "Wake everybody, even in ambush";
+WR_HOT_START  = "Imitate hot starts";

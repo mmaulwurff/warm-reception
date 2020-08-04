@@ -7,9 +7,10 @@ from the start, or effectively disable hot starts.
 
 ## Options
 
-- Wake every enemy on a level, or
+- Wake every enemy on a level (optionally even enemies in ambush), or
 - Don't change original behavior, or
-- Turn away enemies that look at you at level start.
+- Turn away enemies that look at you at level start, or
+- Turn enemies to you at level start.
 
 ## Info
 

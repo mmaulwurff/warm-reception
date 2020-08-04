@@ -21,6 +21,7 @@ class wr_EventHandler : EventHandler
     Vanilla,
     AllAsleep,
     AllAwakeEvenAmbush,
+    HotStart,
   }
 
   private
@@ -32,6 +33,7 @@ class wr_EventHandler : EventHandler
     case AllAwake:  actionClass = "wr_Alert"; break;
     case AllAsleep: actionClass = "wr_TurnAwayWhoLooksAtPlayer"; break;
     case AllAwakeEvenAmbush: actionClass = "wr_AlertAmbush"; break;
+    case HotStart:  actionClass = "wr_TurnToLookAtPlayer"; break;
     case Vanilla: return;
     }
 
@@ -89,6 +91,17 @@ class wr_TurnAwayWhoLooksAtPlayer : wr_Action
     {
       double awayAngle = monster.AngleTo(_player) + 180.0;
       monster.A_SetAngle(awayAngle);
+    }
+  }
+}
+
+class wr_TurnToLookAtPlayer : wr_Action
+{
+  override void act(Actor monster)
+  {
+    if (monster.CheckSight(_player))
+    {
+      monster.A_SetAngle(monster.AngleTo(_player));
     }
   }
 }
