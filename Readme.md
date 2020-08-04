@@ -24,4 +24,5 @@ This mod is a part of [m8f's toolbox](https://mmaulwurff.github.io/pages/toolbox
 
 Thanks to:
 - Rowsol for feature suggestions;
-- stainedofmind for bug reports.
+- stainedofmind for bug reports;
+- Caligari87 for feature suggestions.
