@@ -1,16 +1,38 @@
+/* Copyright Alexander 'm8f' Kromm (mmaulwurff@gmail.com) 2020
+ *
+ * This file is a part of Warm Reception.
+ *
+ * Warm Reception is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * Warm Reception is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Warm Reception.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 class wr_EventHandler : EventHandler
 {
 
   override
-  void PlayerEntered(PlayerEvent event)
+  void WorldThingSpawned(WorldEvent event)
   {
-    if (event.playerNumber != consolePlayer) return;
+    let monster = event.thing;
+    let player  = players[consolePlayer].mo;
+    if (monster == NULL || !monster.bIsMonster || player == NULL) return;
 
-    let player = players[consolePlayer].mo;
-
-    if (player == NULL) return;
-
-    setMode(player);
+    switch (wr_mode)
+    {
+    case AllAwake:  alert(monster, player); return;
+    case AllAsleep: turnAwayWhoLooksAtPlayer(monster, player); return;
+    case AllAwakeEvenAmbush: alertAmbush(monster, player); return;
+    case HotStart:  turnToLookAtPlayer(monster, player); return;
+    }
   }
 
 // private: ////////////////////////////////////////////////////////////////////////////////////////
@@ -25,83 +47,35 @@ class wr_EventHandler : EventHandler
   }
 
   private
-  void setMode(Actor player)
+  void alert(Actor monster, Actor player)
   {
-    String actionClass;
-    switch (wr_mode)
-    {
-    case AllAwake:  actionClass = "wr_Alert"; break;
-    case AllAsleep: actionClass = "wr_TurnAwayWhoLooksAtPlayer"; break;
-    case AllAwakeEvenAmbush: actionClass = "wr_AlertAmbush"; break;
-    case HotStart:  actionClass = "wr_TurnToLookAtPlayer"; break;
-    case Vanilla: return;
-    }
-
-    forEachMonsterDo(wr_Action(new(actionClass)).init(player));
+    monster.SoundAlert(player);
   }
 
-  private static
-  void forEachMonsterDo(wr_Action a)
+  private
+  void alertAmbush(Actor monster, Actor player)
   {
-    let i = ThinkerIterator.Create();
-    Actor monster;
-    while (monster = Actor(i.Next()))
+    monster.bAmbush = false;
+    monster.SoundAlert(player);
+  }
+
+  private
+  void turnAwayWhoLooksAtPlayer(Actor monster, Actor player)
+  {
+    if (monster.CheckSight(player))
     {
-      if (monster.bIsMonster) a.act(monster);
+      double awayAngle = monster.AngleTo(player) + 180.0;
+      monster.A_SetAngle(awayAngle);
+    }
+  }
+
+  private
+  void turnToLookAtPlayer(Actor monster, Actor player)
+  {
+    if (monster.CheckSight(player))
+    {
+      monster.A_SetAngle(monster.AngleTo(player));
     }
   }
 
 } // class wr_EventHandler
-
-class wr_Action play
-{
-  wr_Action init(Actor player)
-  {
-    _player = player;
-    return self;
-  }
-
-  virtual void act(Actor monster) {}
-
-  protected Actor _player;
-}
-
-class wr_Alert : wr_Action
-{
-  override void act(Actor monster)
-  {
-    monster.SoundAlert(_player);
-  }
-}
-
-class wr_AlertAmbush : wr_Action
-{
-  override void act(Actor monster)
-  {
-    monster.bAmbush = false;
-    monster.SoundAlert(_player);
-  }
-}
-
-class wr_TurnAwayWhoLooksAtPlayer : wr_Action
-{
-  override void act(Actor monster)
-  {
-    if (monster.CheckSight(_player))
-    {
-      double awayAngle = monster.AngleTo(_player) + 180.0;
-      monster.A_SetAngle(awayAngle);
-    }
-  }
-}
-
-class wr_TurnToLookAtPlayer : wr_Action
-{
-  override void act(Actor monster)
-  {
-    if (monster.CheckSight(_player))
-    {
-      monster.A_SetAngle(monster.AngleTo(_player));
-    }
-  }
-}
