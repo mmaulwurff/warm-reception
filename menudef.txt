@@ -8,4 +8,5 @@ OptionValue wr_Modes
   0, "$WR_ALL_AWAKE"
   1, "$WR_VANILLA"
   2, "$WR_ALL_ASLEEP"
+  3, "$WR_ALL_AWAKE_AMBUSH"
 }

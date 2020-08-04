@@ -20,6 +20,7 @@ class wr_EventHandler : EventHandler
     AllAwake,
     Vanilla,
     AllAsleep,
+    AllAwakeEvenAmbush,
   }
 
   private
@@ -30,7 +31,8 @@ class wr_EventHandler : EventHandler
     {
     case AllAwake:  actionClass = "wr_Alert"; break;
     case AllAsleep: actionClass = "wr_TurnAwayWhoLooksAtPlayer"; break;
-    case Vanilla:   return;
+    case AllAwakeEvenAmbush: actionClass = "wr_AlertAmbush"; break;
+    case Vanilla: return;
     }
 
     forEachMonsterDo(wr_Action(new(actionClass)).init(player));
@@ -66,6 +68,15 @@ class wr_Alert : wr_Action
 {
   override void act(Actor monster)
   {
+    monster.SoundAlert(_player);
+  }
+}
+
+class wr_AlertAmbush : wr_Action
+{
+  override void act(Actor monster)
+  {
+    monster.bAmbush = false;
     monster.SoundAlert(_player);
   }
 }
