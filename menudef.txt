@@ -11,4 +11,5 @@ OptionValue wr_Modes
   3, "$WR_ALL_AWAKE_AMBUSH"
   4, "$WR_HOT_START"
   5, "$WR_REMOVE_START"
+  6, "$WR_KILL_START"
 }

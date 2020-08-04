@@ -35,6 +35,7 @@ class wr_EventHandler : EventHandler
     case AllAwakeEvenAmbush: alertAmbush(monster, player); return;
     case HotStart:  turnToLookAtPlayer(monster, player); return;
     case NoStartEnemies: removeStartEnemies(monster, player); return;
+    case DeadStartEnemies: killStartEnemies(monster, player); return;
     }
   }
 
@@ -48,6 +49,7 @@ class wr_EventHandler : EventHandler
     AllAwakeEvenAmbush,
     HotStart,
     NoStartEnemies,
+    DeadStartEnemies,
   }
 
   private static
@@ -89,6 +91,15 @@ class wr_EventHandler : EventHandler
     {
       level.total_monsters -= monster.bCountKill;
       monster.Destroy();
+    }
+  }
+
+  private static
+  void killStartEnemies(Actor monster, Actor player)
+  {
+    if (isAtStart(monster, player))
+    {
+      monster.A_Die();
     }
   }
 
