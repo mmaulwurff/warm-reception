@@ -5,6 +5,8 @@ Warm Reception is a minimod for GZDoom that alters enemy behavior on level start
 With this mod, you can either make your life harder by aggravating every enemy
 from the start, or effectively disable hot starts.
 
+<img src="https://img.shields.io/github/downloads/mmaulwurff/warm-reception/total" />
+
 ## Options
 
 - Wake every enemy on a level (optionally even enemies in ambush), or
