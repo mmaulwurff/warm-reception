@@ -16,16 +16,17 @@ from the start, or effectively disable hot starts.
 
 ## Info
 
-Author: m8f
+Author: m8f.
 
-License: GPLv3 (see copying.txt)
+License: GPLv3 (see [copying.txt](copying.txt)).
 
 This mod is a part of [m8f's toolbox](https://mmaulwurff.github.io/pages/toolbox).
 
 ## Acknowledgments
 
 Thanks to:
+
 - Rowsol for feature suggestions;
 - stainedofmind for bug reports;
-- Caligari87 for feature suggestions.
+- Caligari87 for feature suggestions;
 - thugsta for bug reports.
