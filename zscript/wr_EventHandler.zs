@@ -1,4 +1,4 @@
-/* Copyright Alexander 'm8f' Kromm (mmaulwurff@gmail.com) 2020
+/* Copyright Alexander 'm8f' Kromm (mmaulwurff@gmail.com) 2020, 2022
  *
  * This file is a part of Warm Reception.
  *
@@ -106,7 +106,7 @@ class wr_EventHandler : EventHandler
   private static
   bool isAtStart(Actor monster, Actor player)
   {
-    return monster.CheckSight(player);
+    return monster.CheckSight(player) && level.time < 2;
   }
 
 } // class wr_EventHandler

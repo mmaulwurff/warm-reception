@@ -28,3 +28,4 @@ Thanks to:
 - Rowsol for feature suggestions;
 - stainedofmind for bug reports;
 - Caligari87 for feature suggestions.
+- thugsta for bug reports.
