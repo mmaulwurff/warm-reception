@@ -4,10 +4,8 @@
 #
 # Usage: ./scripts/build.sh
 
-set -e
-
 filename=warm-reception-$(git describe --abbrev=0 --tags).pk3
 
-rm  -f "$filename"
-zip -R "$filename" "*.md" "*.txt" "*.zs"
-gzdoom "$filename" "$@"
+rm --force "$filename"
+zip --recurse-patterns -0 "$filename" "*.md" "*.txt" "*.zs"
+gzdoom "$filename" "$@" > output 2>&1; cat output
